@@ -1,0 +1,128 @@
+/* Renk ve stil değişkenleri */
+$darker-blue: #34495e;
+$light-blue: #ecf0f1;
+$button-bg: #e74c3c;
+$border-color: #ccc;
+
+.dice-video-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fafafa;
+
+  /* --- Hero/Silly Başlık Bölümü --- */
+  .hero-section {
+    background: $light-blue;
+    text-align: center;
+    padding: 40px 20px;
+    border-bottom: 2px dashed $darker-blue;
+
+    .hero-title {
+      font-size: 2.8rem;
+      color: $darker-blue;
+      margin: 0 0 15px;
+      font-weight: bold;
+    }
+
+    .hero-desc {
+      font-size: 1.2rem;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  /* --- İçerik Konteyneri --- */
+  .content-container {
+    max-width: 800px;
+    margin: -20px auto 40px; /* Hero ile hafif örtüşme */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: $darker-blue;
+    }
+
+    .intro-text {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .dice-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+
+      .die {
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        padding: 10px;
+        text-align: center;
+        min-width: 60px;
+        background-color: #fdfdfd;
+
+        .die-value {
+          font-size: 24px;
+          margin-bottom: 5px;
+          color: $darker-blue;
+        }
+
+        .hold-label {
+          font-size: 0.9rem;
+          color: #333;
+          input {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    .roll-button {
+      background-color: $button-bg;
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+      margin-bottom: 15px;
+
+      &:hover {
+        background-color: darken($button-bg, 10%);
+      }
+    }
+
+    .volume-info {
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: $darker-blue;
+    }
+
+    .video-player {
+      width: 100%;
+      max-width: 640px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #000;
+      outline: none;
+
+      /* ---- Ses Kontrollerini Gizleyen CSS Hack'ler ---- */
+      /* Chrome, Safari, Edge (Blink / WebKit) */
+      &::-webkit-media-controls-volume-slider,
+      &::-webkit-media-controls-mute-button {
+        display: none !important;
+      }
+      /* Firefox (Gecko) - her sürümde %100 çalışmayabilir */
+      &::-moz-volume-slider {
+        display: none !important;
+      }
+    }
+  }
+}
