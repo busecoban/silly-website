@@ -48,7 +48,7 @@ function DiceVideoPage() {
   useEffect(() => {
     if (videoRef.current) {
       const maxDiceValue = NUMBER_OF_DICE * 6; // Maksimum 36
-      const newVolume = totalDiceValue / maxDiceValue;
+      const newVolume = Math.pow(totalDiceValue / maxDiceValue, 2); // Use quadratic scaling for more noticeable differences
       videoRef.current.volume = newVolume;
       videoRef.current.muted = totalDiceValue === 0;
     }
@@ -59,16 +59,14 @@ function DiceVideoPage() {
       {/* --- Hero/Silly Başlık Bölümü --- */}
       <div className="hero-section">
         <h1 className="hero-title">Sesinizi Şansınız Belirlesin!</h1>
-        <p className="hero-desc">
-          Zarlar atılmadan ses sıfır, “Roll Dice” ile zarlar devreye girsin!
-        </p>
+       
       </div>
 
       {/* --- İçerik Bölümü --- */}
       <div className="content-container">
         <p className="intro-text">
           "Roll Dice" butonuna basın; tutulmayan zarlar rastgele değer alacak ve toplam zar değeri,
-          videonun sesini ayarlayacak. (Ses, yalnızca kod tarafından kontrol ediliyor!)
+          videonun sesini ayarlayacak.
         </p>
 
         <div className="dice-section">
