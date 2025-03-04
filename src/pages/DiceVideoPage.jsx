@@ -8,14 +8,15 @@ function getRandomValue() {
 
 function DiceVideoPage() {
   const NUMBER_OF_DICE = 6;
-  const [dice, setDice] = useState([]);
+  const [dice, setDice] = useState(Array(NUMBER_OF_DICE).fill({ value: getRandomValue(), held: false }));
+  const [rolling, setRolling] = useState(false);
   const videoRef = useRef(null);
 
-  // Sayfa ilk açıldığında tüm zarların değeri 0 olacak şekilde başlatıyoruz.
+  // Sayfa ilk açıldığında tüm zarların değeri 1-6 arası rastgele olacak şekilde başlatıyoruz.
   useEffect(() => {
     const initialDice = [];
     for (let i = 0; i < NUMBER_OF_DICE; i++) {
-      initialDice.push({ value: 0, held: false });
+      initialDice.push({ value: getRandomValue(), held: false });
     }
     setDice(initialDice);
   }, []);
@@ -25,11 +26,13 @@ function DiceVideoPage() {
 
   // Roll Dice: "held" olmayan zarların değerlerini 1-6 arası rastgele ata
   const rollDice = () => {
-    setDice(prevDice =>
-      prevDice.map(d =>
-        d.held ? d : { ...d, value: getRandomValue() }
-      )
-    );
+    setRolling(true);
+    setTimeout(() => {
+      setDice(prevDice =>
+        prevDice.map(d => (d.held ? d : { ...d, value: getRandomValue() }))
+      );
+      setRolling(false);
+    }, 500); // Match the duration of the animation
   };
 
   // "Hold" kutusu: Zarın sabit kalmasını sağlar
@@ -47,31 +50,36 @@ function DiceVideoPage() {
       const maxDiceValue = NUMBER_OF_DICE * 6; // Maksimum 36
       const newVolume = totalDiceValue / maxDiceValue;
       videoRef.current.volume = newVolume;
-      // Eğer toplam 0 ise video mute, değilse mute kaldırılır
       videoRef.current.muted = totalDiceValue === 0;
     }
   }, [totalDiceValue]);
 
   return (
     <div className="dice-video-page">
-      
       {/* --- Hero/Silly Başlık Bölümü --- */}
       <div className="hero-section">
         <h1 className="hero-title">Sesinizi Şansınız Belirlesin!</h1>
         <p className="hero-desc">
+          Zarlar atılmadan ses sıfır, “Roll Dice” ile zarlar devreye girsin!
         </p>
       </div>
-      
+
       {/* --- İçerik Bölümü --- */}
       <div className="content-container">
         <p className="intro-text">
-          "Roll Dice" butonuna basın; tutulmayan zarlar rastgele değer alacak ve toplam zar değeri, videonun sesini ayarlayacak.
+          "Roll Dice" butonuna basın; tutulmayan zarlar rastgele değer alacak ve toplam zar değeri,
+          videonun sesini ayarlayacak. (Ses, yalnızca kod tarafından kontrol ediliyor!)
         </p>
-        
+
         <div className="dice-section">
           {dice.map((die, idx) => (
             <div key={idx} className="die">
-              <div className="die-value">{die.value}</div>
+              {/* Zar resmi: public klasöründeki dosyayı dinamik olarak gösteriyoruz */}
+              <img
+                src={`/dice-${die.value}.png`}
+                alt={`Dice face ${die.value}`}
+                className={`die-image ${rolling && !die.held ? 'rolling' : ''}`}
+              />
               <label className="hold-label">
                 <input
                   type="checkbox"
@@ -83,22 +91,22 @@ function DiceVideoPage() {
             </div>
           ))}
         </div>
-        
+
         <button onClick={rollDice} className="roll-button">
           Roll Dice
         </button>
-        
+
         <div className="volume-info">
           Toplam Zar: <strong>{totalDiceValue}</strong>
         </div>
-        
+
         {/* --- Video Bölümü --- */}
-        {/* autoPlay, muted, playsInline: Video otomatik sessiz oynatılır. */}
-        {/* controls veriyoruz ama sesle ilgili kontroller CSS ile gizlenecek */}
+        {/* Video otomatik sessiz oynatılır; kontrol çubuğundaki sesle ilgili kısımlar SCSS ile gizlenecek */}
         <video
           ref={videoRef}
           autoPlay
           muted
+          loop
           playsInline
           controls
           className="video-player"
@@ -108,11 +116,9 @@ function DiceVideoPage() {
         </video>
       </div>
 
-       {/* footer */}
-       <Footer />
-      
+      {/* Footer Component */}
+      <Footer />
     </div>
-    
   );
 }
 

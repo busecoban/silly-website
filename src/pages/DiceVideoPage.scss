@@ -4,6 +4,24 @@ $light-blue: #ecf0f1;
 $button-bg: #e74c3c;
 $border-color: #ccc;
 
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .dice-video-page {
   display: flex;
   flex-direction: column;
@@ -65,6 +83,8 @@ $border-color: #ccc;
         text-align: center;
         min-width: 60px;
         background-color: #fdfdfd;
+        display: inline-block; // Ensure dice are displayed inline
+        margin: 10px; // Add some margin around each die
 
         .die-value {
           font-size: 24px;
@@ -77,6 +97,15 @@ $border-color: #ccc;
           color: #333;
           input {
             margin-right: 4px;
+          }
+        }
+
+        .die-image {
+          width: 50px; // Set the desired width
+          height: 50px; // Set the desired height
+          object-fit: contain; // Ensure the image fits within the specified dimensions
+          &.rolling {
+            animation: roll 0.5s ease-in-out;
           }
         }
       }
@@ -123,6 +152,10 @@ $border-color: #ccc;
       &::-moz-volume-slider {
         display: none !important;
       }
+      
+        
+      
+      
     }
   }
 }
