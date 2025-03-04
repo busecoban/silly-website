@@ -1,0 +1,54 @@
+.side-menu {
+    /* Yan menünün genişliği */
+    width: 240px;
+    
+    /* Arka plan ve hafif bir degrade efekti */
+    background: linear-gradient(135deg, #f0f0f0, #fafafa);
+    
+    /* Sağ kısma ince bir kenarlık ve hafif gölge */
+    border-right: 1px solid #ddd;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
+  
+    /* İç boşluk */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  
+    .menu-title {
+      font-size: 1.4rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: #333;
+      font-weight: 600;
+      text-align: center;
+    }
+  
+    .menu-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+  
+      li {
+        margin-bottom: 8px;
+  
+        a {
+          /* Link görünümü */
+          text-decoration: none;
+          color: #444;
+          font-size: 1rem;
+          font-weight: 500;
+          display: block;
+          
+          /* Menü öğelerinin arka planında hover efekti */
+          padding: 8px 12px;
+          border-radius: 4px;
+          transition: background-color 0.2s ease;
+  
+          &:hover {
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+  }
+  
